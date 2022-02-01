@@ -79,7 +79,6 @@ if __name__ == "__main__":
         text2 = f.read()
 
     # Removing stopwords
-
     stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours','ourselves', 'you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
     querywords = text2.split()
 
@@ -99,7 +98,7 @@ if __name__ == "__main__":
     # Removing special characters
     new_string5 = [re.sub('[!"#$%&()*+/:;<=>@,[\\]^`{|}~\t\n\-]', '', string) for string in text3]
 
-    # Tockenizing with stop words
+    # Tockenizing without stop words
     split_list2 =[i.split(" ") for i in new_string5]
     print(split_list2[1:100])
 
