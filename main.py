@@ -36,24 +36,26 @@ if __name__ == "__main__":
     out.close()
 
     # Splitting data into train test and validation sets
-
-    import sklearn.model_selection
-
     new_string3 = new_string2.replace("]", '')
     new_string4 = new_string3.replace("[", '')
     print(new_string4[0:100])
 
     a = list(new_string4.split(" "))
-    b = random.shuffle(a)
-    train_dataset, test_dataset = sklearn.model_selection.train_test_split(a, train_size=.8, test_size=.2)
-    test2_dataset, valid_dataset = sklearn.model_selection.train_test_split(test_dataset, train_size=.5, test_size=.5)
+    b = random.sample(a, len(a))
+    c = round(len(a)*.8)
+    d = round(len(a)*.9)
+
+
+    train_dataset = b[:c]
+    test_dataset = b[c:d]
+    valid_dataset = b[d:len(a)]
 
 
     print(train_dataset[0:100])
     print(len(train_dataset))
 
-    print(test2_dataset[0:100])
-    print(len(test2_dataset))
+    print(test_dataset[0:100])
+    print(len(test_dataset))
 
     print(valid_dataset[0:100])
     print(len(valid_dataset))
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     train.close()
 
     test = open("test.csv", "w")
-    for element in test2_dataset:
+    for element in test_dataset:
         test.write(element + " ")
     test.close()
 
@@ -77,10 +79,13 @@ if __name__ == "__main__":
         text2 = f.read()
 
     # Removing stopwords
-    from gensim.parsing.preprocessing import remove_stopwords
 
-    lowercase = text2.lower()
-    filtered_text = remove_stopwords(lowercase)
+    stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours','ourselves', 'you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
+    querywords = text2.split()
+
+    removed = [word for word in querywords if word.lower() not in stopwords]
+    filtered_text = ' '.join(removed)
+
     print(filtered_text[0:100])
 
     ns = open("no_stopwords.csv", "w")
@@ -111,20 +116,20 @@ if __name__ == "__main__":
     out_ns.close()
 
     # Splitting data into train test and validation sets
+    e = list(new_string7.split(" "))
+    f = random.sample(e, len(e))
+    g = round(len(f)*.8)
+    h = round(len(f)*.9)
 
-    import sklearn.model_selection
-
-    c = list(new_string7.split(" "))
-    d = random.shuffle(c)
-    train_dataset_ns, test_dataset_ns = sklearn.model_selection.train_test_split(a, train_size=.8, test_size=.2)
-    test2_dataset_ns, valid_dataset_ns = sklearn.model_selection.train_test_split(test_dataset_ns, train_size=.5, test_size=.5)
-
+    train_dataset_ns = f[:g]
+    test_dataset_ns = f[g:h]
+    valid_dataset_ns = f[h:len(e)]
 
     print(train_dataset_ns[0:100])
     print(len(train_dataset_ns))
 
-    print(test2_dataset_ns[0:100])
-    print(len(test2_dataset_ns))
+    print(test_dataset_ns[0:100])
+    print(len(test_dataset_ns))
 
     print(valid_dataset_ns[0:100])
     print(len(valid_dataset_ns))
@@ -135,7 +140,7 @@ if __name__ == "__main__":
     train_ns.close()
 
     test_ns = open("test_ns.csv", "w")
-    for element in test2_dataset_ns:
+    for element in test_dataset_ns:
         test_ns.write(element + " ")
     test_ns.close()
 
